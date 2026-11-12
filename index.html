@@ -36,7 +36,7 @@ nav a:hover::after{transform:scaleX(1);transform-origin:left}
 .btn.acc{background:var(--acc);border-color:var(--acc);color:#fff}
 .btn.acc:hover{background:var(--ink);border-color:var(--ink)}
 .lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
-.lang button{border:0;background:none;font:500 12px "JetBrains Mono",monospace;padding:8px 10px;cursor:pointer;color:var(--mid)}
+.lang button{border:0;background:none;font:500 12px "JetBrains Mono",monospace;padding:9px 12px;cursor:pointer;color:var(--mid)}
 .lang button.on{background:var(--ink);color:var(--paper)}
 .gbtn{border:1px solid var(--line);background:none;border-radius:999px;width:36px;height:36px;cursor:pointer;display:grid;place-items:center}
 .gbtn svg{width:16px;height:16px}
@@ -79,7 +79,7 @@ section{padding:110px 0 0}
 .w{position:relative;overflow:hidden;background:#d9d8d3;transition:opacity .45s,transform .45s}
 .w img{filter:grayscale(1) contrast(1.05);transition:filter .6s,transform .9s cubic-bezier(.16,1,.3,1)}
 .w:hover img{filter:none;transform:scale(1.04)}
-.w figcaption{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:10px 12px;background:var(--paper);transform:translateY(100%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.w figcaption{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:12px 14px;background:var(--paper);transform:translateY(100%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
 .w:hover figcaption{transform:none}
 .w.hide{opacity:.12;transform:scale(.98)}
 .w1{grid-column:span 5;aspect-ratio:4/5}.w2{grid-column:span 4;aspect-ratio:3/4;margin-top:120px}.w3{grid-column:span 3;aspect-ratio:3/4}
@@ -102,9 +102,9 @@ section{padding:110px 0 0}
 .e{border-top:1px solid var(--ink);padding-top:14px;display:flex;flex-direction:column;gap:14px;min-height:300px}
 .e .d{font-size:88px;font-weight:800;letter-spacing:-.06em;line-height:.8}
 .e .d small{font-size:16px;letter-spacing:0;font-weight:500;vertical-align:top;margin-left:6px;color:var(--mid)}
-.e h4{font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.15}
+.e h3{font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.15}
 .e p{color:var(--mid)}
-.e .tag{align-self:flex-start;border:1px solid var(--line);border-radius:999px;padding:5px 10px}
+.e .tag{align-self:flex-start;border:1px solid var(--line);border-radius:999px;padding:7px 12px}
 .e.hot .tag{background:var(--acc);border-color:var(--acc);color:#fff}
 .e .more{margin-top:auto}
 /* course & collection split */
@@ -139,6 +139,7 @@ section{padding:110px 0 0}
 /* booking */
 .book{background:var(--ink);color:var(--paper);margin-top:110px;padding:96px 0}
 .book .sh h2{color:var(--paper)}
+.book .sh .aside,.book .sh .no{color:rgba(236,235,231,.72)}
 .form{grid-column:2/12;display:grid;grid-template-columns:repeat(10,1fr);column-gap:var(--g);row-gap:28px}
 .step{grid-column:1/11;display:flex;gap:8px}
 .step i{flex:1;height:2px;background:rgba(236,235,231,.18);position:relative;overflow:hidden}
@@ -250,9 +251,9 @@ footer .grid>.demo-note{grid-column:1/13;margin-top:24px;color:var(--mid);displa
 <section id="events" class="wrap grid">
  <div class="sh grid" style="grid-column:1/13"><span class="no mono">03</span><h2 data-t="h3">Новости<br>и события</h2><p class="aside" data-t="a3">Флеш-дни, гостевые мастера, выставки. Новости студия обновляет сама в редакторе Tilda.</p></div>
  <div class="ev">
-  <article class="e hot rv"><span class="tag mono" data-t="t1">Флеш-день</span><div class="d">23<small data-t="nov">ноя</small></div><h4 data-t="e1">Флеш-день: 30 готовых эскизов по фиксированной цене</h4><p data-t="e1p">Без записи, в порядке живой очереди. С 12:00 до последнего гостя.</p><a class="more mono" href="#book">→ <span data-t="more">Подробнее</span></a></article>
-  <article class="e rv"><span class="tag mono" data-t="t2">Гость</span><div class="d">05<small data-t="dec">дек</small></div><h4 data-t="e2">Гостевой мастер из Берлина - 4 дня в студии</h4><p data-t="e2p">Абстрактная графика и крупные формы. Запись по листу ожидания.</p><a class="more mono" href="#book">→ <span data-t="more">Подробнее</span></a></article>
-  <article class="e rv"><span class="tag mono" data-t="t3">Выставка</span><div class="d">14<small data-t="dec">дек</small></div><h4 data-t="e3">«Линия на бумаге»: выставка эскизов студии</h4><p data-t="e3p">Оригиналы эскизов и принты из арт-коллекции. Вход свободный.</p><a class="more mono" href="#collection">→ <span data-t="more">Подробнее</span></a></article>
+  <article class="e hot rv"><span class="tag mono" data-t="t1">Флеш-день</span><div class="d">23<small data-t="nov">ноя</small></div><h3 data-t="e1">Флеш-день: 30 готовых эскизов по фиксированной цене</h3><p data-t="e1p">Без записи, в порядке живой очереди. С 12:00 до последнего гостя.</p><a class="more mono" href="#book">→ <span data-t="more">Подробнее</span></a></article>
+  <article class="e rv"><span class="tag mono" data-t="t2">Гость</span><div class="d">05<small data-t="dec">дек</small></div><h3 data-t="e2">Гостевой мастер из Берлина - 4 дня в студии</h3><p data-t="e2p">Абстрактная графика и крупные формы. Запись по листу ожидания.</p><a class="more mono" href="#book">→ <span data-t="more">Подробнее</span></a></article>
+  <article class="e rv"><span class="tag mono" data-t="t3">Выставка</span><div class="d">14<small data-t="dec">дек</small></div><h3 data-t="e3">«Линия на бумаге»: выставка эскизов студии</h3><p data-t="e3p">Оригиналы эскизов и принты из арт-коллекции. Вход свободный.</p><a class="more mono" href="#collection">→ <span data-t="more">Подробнее</span></a></article>
  </div>
 </section>
 
