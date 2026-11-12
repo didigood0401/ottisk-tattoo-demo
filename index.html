@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>ОТТИСК - тату-студия (демо)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0d0d0d;--paper:#ecebe7;--mid:#5c5b57;--line:rgba(13,13,13,.14);--acc:#ff3b1f;--g:24px;--pad:clamp(16px,3.2vw,48px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:"Inter Tight",Arial,sans-serif;font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%;height:100%;object-fit:cover}
+.mono{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.wrap{padding:0 var(--pad)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--g)}
+/* visible swiss grid */
+.cols{position:fixed;inset:0 var(--pad);display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--g);pointer-events:none;z-index:90;opacity:0;transition:opacity .4s}
+.cols i{background:rgba(255,59,31,.07);border-left:1px solid rgba(255,59,31,.25);border-right:1px solid rgba(255,59,31,.25)}
+body.show-grid .cols{opacity:1}
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(236,235,231,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header .grid{align-items:center;height:60px}
+.logo{grid-column:1/4;font-weight:800;font-size:20px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+.logo b{width:14px;height:14px;background:var(--acc);border-radius:50%;display:inline-block}
+nav{grid-column:4/10;display:flex;gap:28px}
+nav a{position:relative}
+nav a::after{content:"";position:absolute;left:0;bottom:-3px;height:1px;width:100%;background:var(--ink);transform:scaleX(0);transform-origin:right;transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+nav a:hover::after{transform:scaleX(1);transform-origin:left}
+.hd-r{grid-column:10/13;display:flex;justify-content:flex-end;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:11px 18px;border:1px solid var(--ink);border-radius:999px;background:transparent;font:inherit;cursor:pointer;transition:background .25s,color .25s}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.acc{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.acc:hover{background:var(--ink);border-color:var(--ink)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:none;font:500 12px "JetBrains Mono",monospace;padding:8px 10px;cursor:pointer;color:var(--mid)}
+.lang button.on{background:var(--ink);color:var(--paper)}
+.gbtn{border:1px solid var(--line);background:none;border-radius:999px;width:36px;height:36px;cursor:pointer;display:grid;place-items:center}
+.gbtn svg{width:16px;height:16px}
+/* hero */
+.hero{padding-top:56px;position:relative}
+.hero .meta{grid-column:1/13;display:flex;justify-content:space-between;border-top:1px solid var(--ink);padding-top:12px}
+.big{grid-column:1/13;font-weight:800;letter-spacing:-.065em;line-height:.78;font-size:clamp(84px,24.5vw,400px);margin:18px 0 0 -.04em;white-space:nowrap;overflow:hidden;position:relative;z-index:2}
+.big span{display:inline-block;transform:translateY(105%);transition:transform 1.1s cubic-bezier(.16,1,.3,1)}
+.loaded .big span{transform:none}
+.big span:nth-child(2){transition-delay:.06s}.big span:nth-child(3){transition-delay:.12s}.big span:nth-child(4){transition-delay:.18s}.big span:nth-child(5){transition-delay:.24s}.big span:nth-child(6){transition-delay:.3s}
+.big .dot{color:var(--acc)}
+.hero-row{margin-top:28px;align-items:end}
+.hero-l{grid-column:1/5;display:flex;flex-direction:column;gap:22px;padding-bottom:6px}
+.hero-l p{font-size:22px;line-height:1.25;font-weight:500;max-width:420px}
+.hero-img{grid-column:5/10;aspect-ratio:4/3;overflow:hidden;position:relative;clip-path:inset(100% 0 0 0);transition:clip-path 1.3s .4s cubic-bezier(.16,1,.3,1)}
+.loaded .hero-img{clip-path:inset(0 0 0 0)}
+.hero-img img{filter:grayscale(1) contrast(1.08);transform:scale(1.12);transition:transform 1.8s .4s cubic-bezier(.16,1,.3,1)}
+.loaded .hero-img img{transform:scale(1)}
+.hero-r{grid-column:10/13;align-self:stretch;display:flex;flex-direction:column;justify-content:space-between;border-left:1px solid var(--line);padding-left:var(--g)}
+.hero-r .reg{font-size:13px;color:var(--mid);writing-mode:vertical-rl;transform:rotate(180deg);align-self:flex-start}
+.stat b{display:block;font-size:56px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.stat span{color:var(--mid);font-size:13px}
+/* ticker */
+.tick{margin-top:56px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);overflow:hidden;white-space:nowrap;padding:14px 0}
+.tick div{display:inline-flex;gap:48px;animation:tk 32s linear infinite;font-size:26px;font-weight:600;letter-spacing:-.02em}
+.tick div span{display:inline-flex;align-items:center;gap:48px}
+.tick div span::after{content:"";width:12px;height:12px;border-radius:50%;background:var(--acc)}
+@keyframes tk{to{transform:translateX(-50%)}}
+/* section heads */
+section{padding:110px 0 0}
+.sh{align-items:end;margin-bottom:36px}
+.sh .no{grid-column:1/2;color:var(--mid)}
+.sh h2{grid-column:2/9;font-size:clamp(44px,6.4vw,104px);font-weight:800;letter-spacing:-.055em;line-height:.88}
+.sh .aside{grid-column:9/13;color:var(--mid);max-width:360px;justify-self:end;text-align:right}
+/* works */
+.filters{grid-column:1/13;display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.filters button{font:500 12px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.04em;border:1px solid var(--line);background:none;border-radius:999px;padding:9px 14px;cursor:pointer;transition:all .25s}
+.filters button.on,.filters button:hover{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+.works{grid-column:1/13;display:grid;grid-template-columns:repeat(12,1fr);gap:var(--g)}
+.w{position:relative;overflow:hidden;background:#d9d8d3;transition:opacity .45s,transform .45s}
+.w img{filter:grayscale(1) contrast(1.05);transition:filter .6s,transform .9s cubic-bezier(.16,1,.3,1)}
+.w:hover img{filter:none;transform:scale(1.04)}
+.w figcaption{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:10px 12px;background:var(--paper);transform:translateY(100%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.w:hover figcaption{transform:none}
+.w.hide{opacity:.12;transform:scale(.98)}
+.w1{grid-column:span 5;aspect-ratio:4/5}.w2{grid-column:span 4;aspect-ratio:3/4;margin-top:120px}.w3{grid-column:span 3;aspect-ratio:3/4}
+.w4{grid-column:2/6;aspect-ratio:1}.w5{grid-column:7/13;aspect-ratio:16/10;margin-top:-80px}
+/* artists list with cursor preview */
+.artists{grid-column:1/13;border-top:1px solid var(--ink)}
+.ar{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--g);align-items:center;padding:22px 0;border-bottom:1px solid var(--line);cursor:pointer;position:relative}
+.ar .n{grid-column:1/2;color:var(--mid)}
+.ar h3{grid-column:2/7;font-size:clamp(30px,4.2vw,64px);font-weight:800;letter-spacing:-.05em;line-height:1;transition:transform .45s cubic-bezier(.16,1,.3,1),color .3s}
+.ar .st{grid-column:7/10;color:var(--mid)}
+.ar .go{grid-column:10/13;justify-self:end;display:flex;gap:10px;align-items:center}
+.ar .go i{width:44px;height:44px;border:1px solid var(--ink);border-radius:50%;display:grid;place-items:center;transition:all .3s;font-style:normal}
+.ar:hover h3{transform:translateX(18px);color:var(--acc)}
+.ar:hover .go i{background:var(--acc);border-color:var(--acc);color:#fff;transform:rotate(-45deg)}
+.prev{position:fixed;left:0;top:0;width:260px;aspect-ratio:3/4;pointer-events:none;z-index:60;overflow:hidden;opacity:0;transform:translate(-50%,-50%) scale(.8);transition:opacity .25s,transform .35s cubic-bezier(.16,1,.3,1)}
+.prev.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.prev img{filter:grayscale(1)}
+/* events */
+.ev{grid-column:1/13;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--g)}
+.e{border-top:1px solid var(--ink);padding-top:14px;display:flex;flex-direction:column;gap:14px;min-height:300px}
+.e .d{font-size:88px;font-weight:800;letter-spacing:-.06em;line-height:.8}
+.e .d small{font-size:16px;letter-spacing:0;font-weight:500;vertical-align:top;margin-left:6px;color:var(--mid)}
+.e h4{font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.15}
+.e p{color:var(--mid)}
+.e .tag{align-self:flex-start;border:1px solid var(--line);border-radius:999px;padding:5px 10px}
+.e.hot .tag{background:var(--acc);border-color:var(--acc);color:#fff}
+.e .more{margin-top:auto}
+/* course & collection split */
+.split{grid-column:1/13;display:grid;grid-template-columns:repeat(12,1fr);gap:var(--g)}
+.course{grid-column:1/7;background:var(--ink);color:var(--paper);padding:36px;display:flex;flex-direction:column;gap:24px;min-height:560px}
+.course h3{font-size:clamp(40px,5vw,76px);font-weight:800;letter-spacing:-.055em;line-height:.9}
+.course ol{list-style:none;counter-reset:s;border-top:1px solid rgba(236,235,231,.2)}
+.course li{counter-increment:s;display:grid;grid-template-columns:48px 1fr auto;padding:14px 0;border-bottom:1px solid rgba(236,235,231,.2)}
+.course li::before{content:counter(s,decimal-leading-zero);font:12px "JetBrains Mono",monospace;color:var(--acc);padding-top:4px}
+.course li span{color:rgba(236,235,231,.72)}
+.course .btn{border-color:var(--paper);align-self:flex-start;margin-top:auto}
+.course .btn:hover{background:var(--paper);color:var(--ink)}
+.coll{grid-column:7/13;display:grid;grid-template-rows:1fr auto;gap:16px}
+.coll .im{overflow:hidden;position:relative;background:#e3dccb}
+.coll .im img{object-fit:contain;mix-blend-mode:multiply;padding:24px}
+.coll .im .lbl{position:absolute;left:16px;top:16px}
+.coll .row{display:flex;justify-content:space-between;align-items:end;gap:16px}
+.coll h3{font-size:36px;font-weight:800;letter-spacing:-.045em;line-height:.95}
+/* merch */
+.merch{grid-column:1/13;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--g)}
+.m{border:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:14px;transition:border-color .3s}
+.m:hover{border-color:var(--ink)}
+.m .pic{aspect-ratio:1;background:#dfded9;display:grid;place-items:center}
+.m .pic svg{width:58%;height:58%}
+.m .row{display:flex;justify-content:space-between;align-items:center}
+.m b{font-size:18px}
+.m button{border:1px solid var(--ink);background:none;border-radius:999px;width:36px;height:36px;cursor:pointer;font-size:18px;transition:all .25s}
+.m button:hover,.m button.ok{background:var(--acc);border-color:var(--acc);color:#fff}
+.cart{visibility:hidden;position:fixed;right:var(--pad);bottom:24px;z-index:70;background:var(--ink);color:var(--paper);border-radius:999px;padding:12px 18px;display:flex;gap:10px;align-items:center;transform:translateY(140%);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.cart.on{transform:none;visibility:visible}
+.cart b{background:var(--acc);border-radius:999px;min-width:24px;height:24px;display:grid;place-items:center;font-size:12px}
+/* booking */
+.book{background:var(--ink);color:var(--paper);margin-top:110px;padding:96px 0}
+.book .sh h2{color:var(--paper)}
+.form{grid-column:2/12;display:grid;grid-template-columns:repeat(10,1fr);column-gap:var(--g);row-gap:28px}
+.step{grid-column:1/11;display:flex;gap:8px}
+.step i{flex:1;height:2px;background:rgba(236,235,231,.18);position:relative;overflow:hidden}
+.step i::after{content:"";position:absolute;inset:0;background:var(--acc);transform:scaleX(0);transform-origin:left;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.step i.on::after{transform:scaleX(1)}
+.q{grid-column:1/11;display:none;flex-direction:column;gap:18px}
+.q.on{display:flex;animation:qi .6s cubic-bezier(.16,1,.3,1)}
+@keyframes qi{from{opacity:0;transform:translateY(24px)}}
+.q h3{font-size:clamp(28px,3.6vw,52px);font-weight:600;letter-spacing:-.04em;line-height:1}
+.opts{display:flex;flex-wrap:wrap;gap:10px}
+.opts button{font:inherit;font-size:18px;background:none;color:var(--paper);border:1px solid rgba(236,235,231,.35);border-radius:999px;padding:14px 22px;cursor:pointer;transition:all .25s}
+.opts button:hover{border-color:var(--paper)}
+.opts button.on{background:var(--acc);border-color:var(--acc)}
+.inp{display:grid;grid-template-columns:1fr 1fr;gap:var(--g)}
+.inp input,.inp textarea{width:100%;background:none;border:0;border-bottom:1px solid rgba(236,235,231,.35);color:var(--paper);font:inherit;font-size:22px;padding:12px 0;outline:none;transition:border-color .3s}
+.inp input:focus,.inp textarea:focus{border-color:var(--acc)}
+.inp textarea{grid-column:1/3;resize:none;height:90px}
+.nav2{grid-column:1/11;display:flex;justify-content:space-between;align-items:center}
+.book .btn{border-color:var(--paper)}
+.book .btn:hover{background:var(--paper);color:var(--ink)}
+.book .btn.acc{border-color:var(--acc)}
+.done{font-size:clamp(32px,4vw,60px);font-weight:800;letter-spacing:-.05em;line-height:1}
+/* footer */
+footer{padding:64px 0 28px}
+footer .grid>.fc{grid-column:span 3;display:flex;flex-direction:column;gap:6px}
+footer .grid>.mega{grid-column:1/13;font-size:clamp(60px,17vw,280px);font-weight:800;letter-spacing:-.07em;line-height:.8;margin-top:56px;color:var(--ink)}
+footer .mega span{color:var(--acc)}
+footer .grid>.demo-note{grid-column:1/13;margin-top:24px;color:var(--mid);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+/* reveal */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.big span,.rv{transform:none!important;opacity:1!important}.hero-img{clip-path:none!important}}
+/* responsive */
+@media (max-width:960px){
+ :root{--g:14px}
+ nav{display:none}.logo{grid-column:1/7}.hd-r{grid-column:7/13}
+ .hd-r .btn{display:none}
+ .hero-l{grid-column:1/13}.hero-img{grid-column:1/13;margin-top:24px}.hero-r{grid-column:1/13;border-left:0;padding-left:0;flex-direction:row;align-items:end;margin-top:20px}.hero-r .reg{display:none}
+ .sh .no{grid-column:1/13}.sh h2{grid-column:1/13}.sh .aside{grid-column:1/13;justify-self:start;text-align:left;margin-top:14px}
+ .w1,.w2,.w3,.w4,.w5{grid-column:span 12;margin-top:0;aspect-ratio:4/5}
+ .w2,.w3{grid-column:span 6}
+ .ar h3{grid-column:2/13}.ar .st{grid-column:2/13}.ar .go{display:none}
+ .ev{grid-template-columns:1fr}.e{min-height:0}
+ .course,.coll{grid-column:1/13}.coll .im{aspect-ratio:4/3}
+ .merch{grid-template-columns:1fr 1fr}
+ .form{grid-column:1/13}.inp{grid-template-columns:1fr}.inp textarea{grid-column:1}
+ footer .grid>.fc{grid-column:span 6;margin-bottom:20px}
+ .prev{display:none}
+ .hero .meta span:nth-child(2){display:none}
+}
+</style>
+</head>
+<body>
+<div class="cols" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<header><div class="wrap grid">
+ <a class="logo" href="#top"><b></b>ОТТИСК</a>
+ <nav class="mono"><a href="#works" data-t="n1">Работы</a><a href="#team" data-t="n2">Мастера</a><a href="#events" data-t="n3">События</a><a href="#course" data-t="n4">Курс</a><a href="#merch" data-t="n5">Мерч</a></nav>
+ <div class="hd-r">
+  <button class="gbtn" id="gridT" title="Сетка" aria-label="Показать сетку"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor"><path d="M1 1h14v14H1zM5.5 1v14M10.5 1v14"/></svg></button>
+  <div class="lang"><button class="on" data-l="ru">RU</button><button data-l="en">EN</button></div>
+  <a class="btn acc mono" href="#book" data-t="cta">Записаться</a>
+ </div>
+</div></header>
+
+<main id="top">
+<div class="hero wrap grid">
+ <div class="meta mono"><span data-t="m1">Тату-студия · Москва</span><span>55.7558° N · 37.6173° E</span><span data-t="m2">Пн-Вс 12:00-22:00</span></div>
+ <h1 class="big" aria-label="ОТТИСК"><span>О</span><span>Т</span><span>Т</span><span>И</span><span>С</span><span>К<i class="dot">.</i></span></h1>
+ <div class="grid hero-row" style="grid-column:1/13">
+  <div class="hero-l">
+   <p data-t="lead">Авторская татуировка в чёрном и графике. Пять мастеров, одна линия - ничего лишнего.</p>
+   <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn acc" href="#book" data-t="cta2">Записаться на сеанс →</a><a class="btn" href="#works" data-t="see">Смотреть работы</a></div>
+  </div>
+  <div class="hero-img"><img src="img/a1.jpg" alt="Мастер за работой"></div>
+  <div class="hero-r">
+   <span class="reg mono">Est. 2019 - Black / Graphic / Fineline</span>
+   <div class="stat"><b data-c="2400">0</b><span data-t="s1">сеансов</span></div>
+   <div class="stat"><b data-c="5">0</b><span data-t="s2">мастеров</span></div>
+  </div>
+ </div>
+</div>
+
+<div class="tick"><div><span>Blackwork</span><span>Графика</span><span>Fineline</span><span>Орнамент</span><span>Леттеринг</span><span>Перекрытие</span><span>Blackwork</span><span>Графика</span><span>Fineline</span><span>Орнамент</span><span>Леттеринг</span><span>Перекрытие</span></div></div>
+
+<section id="works" class="wrap grid">
+ <div class="sh grid" style="grid-column:1/13"><span class="no mono">01</span><h2 data-t="h1">Работы</h2><p class="aside" data-t="a1">Каждая работа - эскиз с нуля под тело и историю клиента. Наведите, чтобы увидеть цвет.</p></div>
+ <div class="filters" id="flt"><button class="on" data-f="all" data-t="f0">Все</button><button data-f="black">Blackwork</button><button data-f="line">Fineline</button><button data-f="graph" data-t="f3">Графика</button></div>
+ <div class="works">
+  <figure class="w w1 rv" data-k="black"><img src="img/w1.jpg" alt=""><figcaption class="mono"><span>Леттеринг, предплечье</span><span>Марк</span></figcaption></figure>
+  <figure class="w w2 rv" data-k="graph"><img src="img/w2.jpg" alt=""><figcaption class="mono"><span>Рукав, графика</span><span>Ева</span></figcaption></figure>
+  <figure class="w w3 rv" data-k="line"><img src="img/w5.jpg" alt=""><figcaption class="mono"><span>Fineline, запястье</span><span>Лия</span></figcaption></figure>
+  <figure class="w w4 rv" data-k="black"><img src="img/w4.jpg" alt=""><figcaption class="mono"><span>Процесс, контур</span><span>Тимур</span></figcaption></figure>
+  <figure class="w w5 rv" data-k="graph"><img src="img/w3.jpg" alt=""><figcaption class="mono"><span>Студия, рабочее место</span><span>ОТТИСК</span></figcaption></figure>
+ </div>
+</section>
+
+<section id="team" class="wrap grid">
+ <div class="sh grid" style="grid-column:1/13"><span class="no mono">02</span><h2 data-t="h2">Мастера</h2><p class="aside" data-t="a2">У каждого мастера своя страница: стиль, портфолио, свободные даты и запись.</p></div>
+ <div class="artists" id="arts">
+  <a class="ar" href="#book" data-img="img/a1.jpg"><span class="n mono">A/01</span><h3>Марк Орлов</h3><span class="st mono">Blackwork · Леттеринг</span><span class="go mono"><span data-t="free">Ближайшая дата 18.11</span><i>→</i></span></a>
+  <a class="ar" href="#book" data-img="img/w2.jpg"><span class="n mono">A/02</span><h3>Ева Ланская</h3><span class="st mono">Графика · Рукава</span><span class="go mono"><span>21.11</span><i>→</i></span></a>
+  <a class="ar" href="#book" data-img="img/w5.jpg"><span class="n mono">A/03</span><h3>Лия Ким</h3><span class="st mono">Fineline · Миниатюра</span><span class="go mono"><span>16.11</span><i>→</i></span></a>
+  <a class="ar" href="#book" data-img="img/w4.jpg"><span class="n mono">A/04</span><h3>Тимур Сафин</h3><span class="st mono">Орнамент · Перекрытия</span><span class="go mono"><span>24.11</span><i>→</i></span></a>
+  <a class="ar" href="#course" data-img="img/w1.jpg"><span class="n mono">A/05</span><h3>Гостевой мастер</h3><span class="st mono" data-t="guest">Декабрь · Берлин</span><span class="go mono"><span data-t="wl">Лист ожидания</span><i>→</i></span></a>
+ </div>
+</section>
+
+<section id="events" class="wrap grid">
+ <div class="sh grid" style="grid-column:1/13"><span class="no mono">03</span><h2 data-t="h3">Новости<br>и события</h2><p class="aside" data-t="a3">Флеш-дни, гостевые мастера, выставки. Новости студия обновляет сама в редакторе Tilda.</p></div>
+ <div class="ev">
+  <article class="e hot rv"><span class="tag mono" data-t="t1">Флеш-день</span><div class="d">23<small data-t="nov">ноя</small></div><h4 data-t="e1">Флеш-день: 30 готовых эскизов по фиксированной цене</h4><p data-t="e1p">Без записи, в порядке живой очереди. С 12:00 до последнего гостя.</p><a class="more mono" href="#book">→ <span data-t="more">Подробнее</span></a></article>
+  <article class="e rv"><span class="tag mono" data-t="t2">Гость</span><div class="d">05<small data-t="dec">дек</small></div><h4 data-t="e2">Гостевой мастер из Берлина - 4 дня в студии</h4><p data-t="e2p">Абстрактная графика и крупные формы. Запись по листу ожидания.</p><a class="more mono" href="#book">→ <span data-t="more">Подробнее</span></a></article>
+  <article class="e rv"><span class="tag mono" data-t="t3">Выставка</span><div class="d">14<small data-t="dec">дек</small></div><h4 data-t="e3">«Линия на бумаге»: выставка эскизов студии</h4><p data-t="e3p">Оригиналы эскизов и принты из арт-коллекции. Вход свободный.</p><a class="more mono" href="#collection">→ <span data-t="more">Подробнее</span></a></article>
+ </div>
+</section>
+
+<section id="course" class="wrap grid">
+ <div class="split">
+  <div class="course rv">
+   <span class="mono" style="color:var(--acc)" data-t="c0">Курс для начинающих · 8 недель</span>
+   <h3 data-t="c1">Научим держать линию</h3>
+   <ol>
+    <li><b data-t="c2">Рисунок и эскиз</b><span>2 нед</span></li>
+    <li><b data-t="c3">Стерильность и оборудование</b><span>1 нед</span></li>
+    <li><b data-t="c4">Линия на искусственной коже</b><span>3 нед</span></li>
+    <li><b data-t="c5">Первые работы под наставником</b><span>2 нед</span></li>
+   </ol>
+   <a class="btn" href="#book" data-t="c6">Записаться на курс · старт 1 февраля</a>
+  </div>
+  <div class="coll rv" id="collection">
+   <div class="im"><span class="lbl mono" data-t="k0">Арт-коллекция · №07</span><img src="img/arch.jpg" alt="Архивный рисунок татуировок"></div>
+   <div class="row"><h3 data-t="k1">Эскизы и принты<br>ограниченным тиражом</h3><a class="btn" href="#merch" data-t="k2">Коллекция →</a></div>
+  </div>
+ </div>
+</section>
+
+<section id="merch" class="wrap grid">
+ <div class="sh grid" style="grid-column:1/13"><span class="no mono">04</span><h2 data-t="h4">Мерч</h2><p class="aside" data-t="a4">Оплата и доставка через корзину Tilda. Добавьте товар - корзина появится внизу.</p></div>
+ <div class="merch">
+  <div class="m rv"><div class="pic"><svg viewBox="0 0 100 100" fill="none" stroke="#0d0d0d" stroke-width="2"><path d="M30 18l-18 12 8 14 8-4v44h44V40l8 4 8-14-18-12c-4 8-10 11-20 11s-16-3-20-11z"/><circle cx="50" cy="56" r="7" fill="#ff3b1f" stroke="none"/></svg></div><span class="mono" data-t="p1">Футболка «Оттиск»</span><div class="row"><b>2 900 ₽</b><button aria-label="В корзину">+</button></div></div>
+  <div class="m rv"><div class="pic"><svg viewBox="0 0 100 100" fill="none" stroke="#0d0d0d" stroke-width="2"><rect x="22" y="14" width="56" height="72"/><path d="M34 70l16-36 16 36M40 58h20"/></svg></div><span class="mono" data-t="p2">Принт A3, эскиз №07</span><div class="row"><b>3 500 ₽</b><button aria-label="В корзину">+</button></div></div>
+  <div class="m rv"><div class="pic"><svg viewBox="0 0 100 100" fill="none" stroke="#0d0d0d" stroke-width="2"><path d="M26 30h48l-6 56H32z"/><path d="M38 30c0-10 5-16 12-16s12 6 12 16"/></svg></div><span class="mono" data-t="p3">Шоппер</span><div class="row"><b>1 600 ₽</b><button aria-label="В корзину">+</button></div></div>
+  <div class="m rv"><div class="pic"><svg viewBox="0 0 100 100" fill="none" stroke="#0d0d0d" stroke-width="2"><rect x="16" y="30" width="68" height="40" rx="4"/><path d="M28 50h44" stroke="#ff3b1f"/></svg></div><span class="mono" data-t="p4">Подарочный сертификат</span><div class="row"><b data-t="p4p">от 5 000 ₽</b><button aria-label="В корзину">+</button></div></div>
+ </div>
+</section>
+
+<section id="book" class="book" style="padding-top:96px">
+ <div class="wrap grid">
+  <div class="sh grid" style="grid-column:1/13"><span class="no mono">05</span><h2 data-t="h5">Запись</h2><p class="aside" data-t="a5">Три вопроса - и мастер напишет вам в течение дня с эскизом и ценой.</p></div>
+  <form class="form" id="bf" onsubmit="return false">
+   <div class="step"><i class="on"></i><i></i><i></i></div>
+   <div class="q on" data-s="0"><h3 data-t="q1">Что хотите сделать?</h3><div class="opts"><button type="button" data-t="o1">Новую татуировку</button><button type="button" data-t="o2">Перекрытие</button><button type="button" data-t="o3">Флеш с эскиза студии</button><button type="button" data-t="o4">Курс</button></div></div>
+   <div class="q" data-s="1"><h3 data-t="q2">Какой размер?</h3><div class="opts"><button type="button" data-t="z1">До 5 см</button><button type="button" data-t="z2">5-15 см</button><button type="button" data-t="z3">Крупная работа</button><button type="button" data-t="z4">Рукав / спина</button></div></div>
+   <div class="q" data-s="2"><h3 data-t="q3">Как с вами связаться?</h3><div class="inp"><input placeholder="Имя" data-p="ph1"><input placeholder="Телефон или Telegram" data-p="ph2"><textarea placeholder="Идея, место на теле, референсы" data-p="ph3"></textarea></div></div>
+   <div class="q" data-s="3"><p class="done" data-t="ok">Спасибо! Мастер напишет вам сегодня.</p></div>
+   <div class="nav2"><button class="btn" type="button" id="back" data-t="bk">← Назад</button><button class="btn acc" type="button" id="next" data-t="nx">Дальше →</button></div>
+  </form>
+ </div>
+</section>
+</main>
+
+<footer class="wrap"><div class="grid">
+ <div class="fc"><span class="mono" style="color:var(--mid)" data-t="fa">Адрес</span><span data-t="fa2">Москва, ул. Примерная, 7</span></div>
+ <div class="fc"><span class="mono" style="color:var(--mid)" data-t="fc">Контакты</span><span>+7 900 000-00-00</span><span>@ottisk.studio</span></div>
+ <div class="fc"><span class="mono" style="color:var(--mid)" data-t="fh">Часы</span><span data-t="m2">Пн-Вс 12:00-22:00</span></div>
+ <div class="fc"><span class="mono" style="color:var(--mid)">Social</span><span>Telegram · VK · Pinterest</span></div>
+ <div class="mega">ОТТИСК<span>.</span></div>
+ <div class="demo-note mono"><span data-t="dn">Демо-концепция главной. Название, тексты и фото - условные, заменяются вашими.</span><span data-t="dn2">Нажмите иконку сетки в шапке - покажет 12-колоночную швейцарскую сетку.</span></div>
+</div></footer>
+
+<div class="prev" id="prev"><img alt=""></div>
+<div class="cart mono" id="cart"><span data-t="cart">Корзина</span><b id="cn">0</b></div>
+
+<script>
+const T={en:{n1:"Work",n2:"Artists",n3:"Events",n4:"Course",n5:"Shop",cta:"Book",m1:"Tattoo studio · Moscow",m2:"Mon-Sun 12:00-22:00",lead:"Custom tattoos in black and graphic. Five artists, one line - nothing extra.",cta2:"Book a session →",see:"See the work",s1:"sessions",s2:"artists",h1:"Work",a1:"Every piece is drawn from scratch for the body and the story. Hover to see colour.",f0:"All",f3:"Graphic",h2:"Artists",a2:"Each artist has a page: style, portfolio, open dates and booking.",free:"Next date 18.11",guest:"December · Berlin",wl:"Waitlist",h3:"News<br>&amp; events",a3:"Flash days, guest artists, shows. The studio updates news itself in the Tilda editor.",t1:"Flash day",t2:"Guest",t3:"Show",nov:"nov",dec:"dec",e1:"Flash day: 30 ready designs at a fixed price",e1p:"No booking, walk-in queue. From 12:00 till the last guest.",e2:"Guest artist from Berlin - 4 days at the studio",e2p:"Abstract graphic and bold shapes. Waitlist booking.",e3:"“Line on paper”: studio sketch exhibition",e3p:"Original sketches and prints from the art collection. Free entry.",more:"More",c0:"Beginner course · 8 weeks",c1:"We teach you to hold the line",c2:"Drawing and sketch",c3:"Hygiene and equipment",c4:"Line on practice skin",c5:"First pieces with a mentor",c6:"Join the course · starts Feb 1",k0:"Art collection · No.07",k1:"Sketches and prints<br>in limited editions",k2:"Collection →",h4:"Shop",a4:"Payment and delivery via the Tilda cart. Add an item - the cart appears below.",p1:"“Ottisk” T-shirt",p2:"A3 print, sketch No.07",p3:"Tote bag",p4:"Gift card",p4p:"from 5 000 ₽",h5:"Booking",a5:"Three questions - an artist will text you today with a sketch and a price.",q1:"What would you like?",o1:"A new tattoo",o2:"A cover-up",o3:"A flash from the studio",o4:"The course",q2:"What size?",z1:"Up to 5 cm",z2:"5-15 cm",z3:"Large piece",z4:"Sleeve / back",q3:"How can we reach you?",ph1:"Name",ph2:"Phone or Telegram",ph3:"Idea, placement, references",ok:"Thank you! An artist will text you today.",bk:"← Back",nx:"Next →",fa:"Address",fa2:"Moscow, Primernaya st. 7",fc:"Contacts",fh:"Hours",dn:"Homepage concept demo. Name, copy and photos are placeholders.",dn2:"Click the grid icon in the header to show the 12-column Swiss grid.",cart:"Cart"}};
+const RU={};document.querySelectorAll('[data-t]').forEach(e=>RU[e.dataset.t]=e.innerHTML);document.querySelectorAll('[data-p]').forEach(e=>RU[e.dataset.p]=e.placeholder);
+function setL(l){document.documentElement.lang=l;const D=l==='en'?T.en:RU;
+ document.querySelectorAll('[data-t]').forEach(e=>{const v=D[e.dataset.t];if(v!=null)e.innerHTML=v});
+ document.querySelectorAll('[data-p]').forEach(e=>{const v=D[e.dataset.p];if(v!=null)e.placeholder=v});
+ document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));}
+document.querySelectorAll('.lang button').forEach(b=>b.onclick=()=>setL(b.dataset.l));
+document.getElementById('gridT').onclick=()=>document.body.classList.toggle('show-grid');
+addEventListener('load',()=>{document.body.classList.add('loaded');count()});
+setTimeout(()=>document.body.classList.add('loaded'),1500);
+function count(){document.querySelectorAll('[data-c]').forEach(el=>{const n=+el.dataset.c,t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1600),e=1-Math.pow(1-k,4);el.textContent=Math.round(n*e).toLocaleString('ru-RU');if(k<1)requestAnimationFrame(f)})(t0)})}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+const RV=[...document.querySelectorAll('.rv')];RV.forEach((e,i)=>{e.style.transitionDelay=(i%4)*70+'ms';io.observe(e)});
+function rvChk(){RV.forEach(e=>{if(!e.classList.contains('in')&&e.getBoundingClientRect().top<innerHeight*.95)e.classList.add('in')})}addEventListener('scroll',rvChk,{passive:true});addEventListener('load',rvChk);
+document.querySelectorAll('#flt button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#flt button').forEach(x=>x.classList.toggle('on',x===b));const f=b.dataset.f;document.querySelectorAll('.w').forEach(w=>w.classList.toggle('hide',f!=='all'&&w.dataset.k!==f))});
+/* cursor preview */
+const pv=document.getElementById('prev'),pi=pv.querySelector('img');let mx=0,my=0,px=0,py=0;
+addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function lp(){px+=(mx-px)*.14;py+=(my-py)*.14;pv.style.left=px+'px';pv.style.top=py+'px';requestAnimationFrame(lp)})();
+document.querySelectorAll('.ar').forEach(a=>{a.onmouseenter=()=>{pi.src=a.dataset.img;pv.classList.add('on')};a.onmouseleave=()=>pv.classList.remove('on')});
+/* cart */
+let cn=0;document.querySelectorAll('.m button').forEach(b=>b.onclick=()=>{cn++;document.getElementById('cn').textContent=cn;document.getElementById('cart').classList.add('on');b.classList.add('ok');b.textContent='✓';setTimeout(()=>{b.classList.remove('ok');b.textContent='+'},1200)});
+/* booking steps */
+let s=0;const qs=[...document.querySelectorAll('.q')],st=[...document.querySelectorAll('.step i')];
+function go(n){s=Math.max(0,Math.min(3,n));qs.forEach((q,i)=>q.classList.toggle('on',i===s));st.forEach((x,i)=>x.classList.toggle('on',i<=Math.min(s,2)));document.getElementById('back').style.visibility=s>0&&s<3?'visible':'hidden';document.getElementById('next').style.display=s<3?'':'none'}
+document.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{b.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));setTimeout(()=>go(s+1),260)});
+document.getElementById('next').onclick=()=>go(s+1);document.getElementById('back').onclick=()=>go(s-1);go(0);
+</script>
+</body>
+</html>
